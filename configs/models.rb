@@ -3,16 +3,19 @@ require_relative 'database'
 class Usuario < Sequel::Model(DB[:usuarios])
 end
 
-class UsuarioLogueado < Sequel::Model(DB[:vw_usuarios_logeados])
+class Carrera < Sequel::Model(DB[:carreras])
 end
 
-class Categoria < Sequel::Model(DB[:categorias]) 
+class UsuarioLogueado < Sequel::Model(DB[:usuarios])
 end
 
-class Alumno < Sequel::Model(DB[:alumnos])
+class Profesor < Sequel::Model(DB[:profesores])
 end
 
-class Docente < Sequel::Model(DB[:docentes])
+class Calificacion < Sequel::Model(DB[:calificaciones])
+end
+
+class Comentario < Sequel::Model(DB[:comentarios])
 end
 
 '''
