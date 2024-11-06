@@ -1,31 +1,138 @@
-@baseUrl = http://10.160.66.127:8080/
+@baseUrl = http://192.168.20.18:4756/
+
+
 
 #############################################
 
-POST {{baseUrl}}usuario/validar 
-content-type: application/json
+
+
+POST {{baseUrl}}/login
+
+Content-Type: application/json
+
+
 
 {
-  "usuario": "20210109",
-  "contrasenia": "123"
+
+ "codigo": "20210109",
+
+ "contrasenia": "JVGZLl0w"
+
 }
 
 
+
 #############################################
-POST {{baseUrl}}usuario/cambiar-contrasenia
+
+
+
+GET {{baseUrl}}/usuario
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiY29kaWdvIjoiMjAyMTAyNzQifQ.0kkGgzXiUE8Ys5kM8jdfdU2QCzIxuzO0TzFGtbXRMuw
+
+
+
+#############################################
+
+
+
+POST {{baseUrl}}/usuarios
+
+Content-Type: application/json
+
+
+
+{
+
+ "nombre": "Juan Pérez",
+
+ "codigo": "20210109",
+
+ "correo": "juan.perez@example.com",
+
+ "celular": "5551234567",
+
+ "foto": "path_to_photo.jpg",
+
+ "contrasenia": "123456",
+
+ "carrera_id": 1
+
+}
+
+
+
+#############################################
+
+
+
+PUT {{baseUrl}}/change-password
+
+Content-Type: application/json
+
+Authorization: Bearer <jwt_token_here>
+
+
+
+{
+
+ "oldContrasenia": "123",
+
+ "newContrasenia": "new_password"
+
+}
+
+
+
+#############################################
+
+
+
+POST {{baseUrl}}/usuario/cambiar-contrasenia
+
 Content-Type: application/x-www-form-urlencoded
 
-correo=45954@aloe.ulima.edu.pe
+
+
+correo=juan.perez@example.com
+
+
 
 #############################################
-POST {{baseUrl}}usuario/crear-usuario
-Content-Type: application/x-www-form-urlencoded
 
-correo=chicle@ulima.edu.pe&usuario=chicle&contrasenia=3972
+
+
+PUT {{baseUrl}}/reset-password
+
+Content-Type: application/json
+
+
+
+{
+
+ "token": "<recovery_token_here>",
+
+ "newContrasenia": "new_password"
+
+}
+
+
 
 #############################################
-GET {{baseUrl}}seccion/alumno
-  ?alumno_id=1
+
+
+
+GET {{baseUrl}}/seccion/alumno
+
+Authorization: Bearer <jwt_token_here>
+
+alumno_id=1
+
+
 
 #############################################
-GET {{baseUrl}}categoria/listar
+
+
+
+GET {{baseUrl}}/categoria/listar
+
