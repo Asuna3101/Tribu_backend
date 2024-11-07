@@ -1,0 +1,17 @@
+@baseUrl = http://192.168.232.1:8080
+
+### Listar Todas las Calificaciones de un Profesor
+GET {{baseUrl}}/profesor/1/calificaciones
+
+### Obtener Solo el Promedio de Calificaciones de un Profesor
+GET {{baseUrl}}/profesor/1/promedio-calificaciones
+#####################################################################
+### Crear Calificación para un Profesor
+POST {{baseUrl}}/profesor/1/calificacion
+Content-Type: application/json
+
+{
+  "usuario_id": 1,
+  "estrella": 5,
+  "resenia": "Excelente profesor"
+}
