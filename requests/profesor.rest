@@ -10,3 +10,6 @@ Content-Type: application/json
 
 ### Listar Profesores por Curso
 GET {{baseUrl}}/profesores/curso/Administracion
+
+### Mostrar la informacion del profesor por su id
+GET {{baseUrl}}/profesor/1

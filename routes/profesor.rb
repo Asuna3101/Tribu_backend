@@ -81,6 +81,36 @@ get '/profesores/curso/:nombre_curso' do
   end
 end
 
+# Endpoint para obtener el perfil básico de un profesor
+get '/profesor/:id' do
+  profesor_id = params[:id].to_i
+
+  begin
+    # Encontrar el profesor por su ID, incluyendo sus cursos
+    profesor = Profesor.eager(:cursos).where(id: profesor_id).first
+
+    if profesor
+      # Formatear la respuesta con la información básica del profesor
+      perfil = {
+        id: profesor.id,
+        nombre: profesor.nombre,
+        correo: profesor.correo,
+        biografia: profesor.biografia,
+        cursos: profesor.cursos.map { |curso| curso.nombre }
+      }
+
+      status 200
+      perfil.to_json
+    else
+      status 404
+      { error: 'Profesor no encontrado' }.to_json
+    end
+  rescue StandardError => e
+    status 500
+    { error: "Error en el servidor: #{e.message}" }.to_json
+  end
+end
+
 
   
   
