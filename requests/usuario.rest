@@ -1,138 +1,58 @@
-@baseUrl = http://192.168.20.18:4756/
+@baseUrl = http://192.168.232.1:8080
 
-
-
-#############################################
-
-
-
+### Login
 POST {{baseUrl}}/login
-
 Content-Type: application/json
 
-
-
 {
-
- "codigo": "20210109",
-
- "contrasenia": "JVGZLl0w"
-
+  "codigo": "20210274",
+  "contrasenia": "1234"
 }
 
 
+###
 
-#############################################
-
-
-
+### Obtener Usuario Autenticado
 GET {{baseUrl}}/usuario
-
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiY29kaWdvIjoiMjAyMTAyNzQifQ.0kkGgzXiUE8Ys5kM8jdfdU2QCzIxuzO0TzFGtbXRMuw
+###
 
-
-
-#############################################
-
-
-
+### Crear Usuario
 POST {{baseUrl}}/usuarios
-
 Content-Type: application/json
 
-
-
 {
-
- "nombre": "Juan Pérez",
-
- "codigo": "20210109",
-
- "correo": "juan.perez@example.com",
-
- "celular": "5551234567",
-
- "foto": "path_to_photo.jpg",
-
- "contrasenia": "123456",
-
- "carrera_id": 1
-
+  "nombre": "Mariela Alca",
+  "codigo": "20192005",
+  "correo": "mariela@test.com",
+  "celular": "902305536",
+  "foto": "ruta/a/foto.jpg",
+  "contrasenia": "123",
+  "carrera_id": 10
 }
 
+###
 
-
-#############################################
-
-
-
+### Cambiar Contraseña (Para Usuario Autenticado)
 PUT {{baseUrl}}/change-password
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiY29kaWdvIjoiMjAyMTAyNzQifQ.0kkGgzXiUE8Ys5kM8jdfdU2QCzIxuzO0TzFGtbXRMuw
 Content-Type: application/json
 
-Authorization: Bearer <jwt_token_here>
-
-
-
 {
-
- "oldContrasenia": "123",
-
- "newContrasenia": "new_password"
-
+  "newContrasenia": "1234",
+  "repetirContrasenia": "1234"
 }
 
 
-
-#############################################
-
+###
 
 
-POST {{baseUrl}}/usuario/cambiar-contrasenia
-
-Content-Type: application/x-www-form-urlencoded
-
-
-
-correo=juan.perez@example.com
-
-
-
-#############################################
-
-
-
-PUT {{baseUrl}}/reset-password
-
+### Generar Contraseña Temporal y Enviar por Correo
+POST {{baseUrl}}/usuario/contrasenia-olvidada
 Content-Type: application/json
 
-
-
 {
-
- "token": "<recovery_token_here>",
-
- "newContrasenia": "new_password"
-
+  "correo": "20210274@aloe.ulima.edu.pe"
 }
 
-
-
-#############################################
-
-
-
-GET {{baseUrl}}/seccion/alumno
-
-Authorization: Bearer <jwt_token_here>
-
-alumno_id=1
-
-
-
-#############################################
-
-
-
-GET {{baseUrl}}/categoria/listar
-
+###

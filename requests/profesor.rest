@@ -1,0 +1,12 @@
+@baseUrl = http://192.168.232.1:8080
+
+##Listar profesores
+GET {{baseUrl}}/profesores/lista
+#############################################
+
+### Buscar profesores por nombre
+GET {{baseUrl}}/profesores/buscar?nombre=JOSE LUIS
+Content-Type: application/json
+
+### Listar Profesores por Curso
+GET {{baseUrl}}/profesores/curso/Administracion

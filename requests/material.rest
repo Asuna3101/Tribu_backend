@@ -1,0 +1,10 @@
+
+@baseUrl = http://192.168.232.1:8080
+### Lista completa de materiales con detalles
+GET {{baseUrl}}/material/lista
+
+### Lista de solo nombres de materiales
+GET {{baseUrl}}/material/lista-nombres
+
+### Listar por nombres de curso
+GET {{baseUrl}}/material/curso/Comunicacion

@@ -4,7 +4,7 @@ require 'sequel'
 set :public_folder, File.dirname(__FILE__) + '/public'
 set :views, File.dirname(__FILE__) + '/views'
 set :protection, except: :frame_options
-set :bind, '10.160.66.127'
+set :bind, '192.168.232.1'
 set :port, 8080
 # db
 require_relative 'configs/database'
