@@ -12,6 +12,6 @@ Content-Type: application/json
 
 {
   "usuario_id": 1,
-  "estrella": 5,
-  "resenia": "Excelente profesor"
+  "estrella": 3,
+  "resenia": "Buen profesor"
 }
