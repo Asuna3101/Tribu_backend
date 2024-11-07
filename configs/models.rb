@@ -48,12 +48,16 @@ class Nivel < Sequel::Model(DB[:niveles])
 end
 
 # Modelo para la tabla de posts
+
 class Post < Sequel::Model(DB[:posts])
   many_to_one :usuario
+  one_to_many :materiales, class: :Material # Asegúrate de usar :materiales
   one_to_many :comentarios
-  one_to_many :materiales
   many_to_many :cursos, join_table: :post_curso
+  one_to_many :reacciones
 end
+
+
 
 # Modelo para la tabla de notificaciones
 class Notificacion < Sequel::Model(DB[:notificaciones])
@@ -66,6 +70,7 @@ class Reaccion < Sequel::Model(DB[:reacciones])
   many_to_one :usuario
   many_to_one :post
 end
+
 
 # Modelo para la tabla de materiales
 class Material < Sequel::Model(DB[:materiales])
