@@ -1,12 +1,12 @@
 @baseUrl = http://192.168.232.1:8080
 
-### Obtener todas las reacciones (likes) de un post específico
+### Obtener todas las reacciones de un post específico
 GET {{baseUrl}}/post/1/likes
 
-### Obtener todas las reacciones (likes) de un usuario específico
+### Obtener todas las reacciones de un usuario específico
 GET {{baseUrl}}/usuario/1/likes
 
-### Dar o quitar "like" a un post (like/unlike)
+### Dar o quitar "like" a un post
 POST {{baseUrl}}/post/1/like
 Content-Type: application/json
 
