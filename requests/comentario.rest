@@ -1,0 +1,24 @@
+@baseUrl = http://192.168.232.1:8080
+
+### Obtener la cantidad de comentarios en un post
+GET {{baseUrl}}/post/1/comments/count
+
+### Obtener todos los comentarios de un post con el usuario que los hizo
+GET {{baseUrl}}/post/1/comments
+
+### Comentar en un post
+POST {{baseUrl}}/post/10/comment
+Content-Type: application/json
+
+{
+  "usuario_id": 10,
+  "texto": "Este es un comentario en el post."
+}
+
+### Borrar un comentario en un post
+DELETE {{baseUrl}}/post/10/comment/15
+Content-Type: application/json
+
+{
+  "usuario_id": 10
+}
