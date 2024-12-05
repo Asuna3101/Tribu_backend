@@ -7,6 +7,7 @@ get '/posts/lista' do
             .join(:materiales, post_id: Sequel[:posts][:id])
             .select(
               Sequel[:usuarios][:nombre].as(:nombre_usuario),
+              Sequel[:usuarios][:foto].as(:foto_usuario), # Ajustado el alias aquí
               Sequel[:carreras][:nombre].as(:carrera),
               Sequel[:posts][:descripcion].as(:descripcion_post),
               Sequel[:materiales][:enlace].as(:enlace_material),
