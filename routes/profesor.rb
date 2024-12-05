@@ -1,22 +1,38 @@
 #ENDPOINT PARA LISTAR A TODOS LOS PROFESORES
 get '/profesores/lista' do
-    status = 200
-    begin
-      profesores = Profesor.all # Realiza la consulta para obtener todos los profesores
-      if profesores.any?
-        resp = profesores.to_json
-      else
-        resp = { message: 'No hay profesores registrados.' }.to_json
-        status = 404
-      end
-    rescue StandardError => e
-      status = 500
-      resp = { error: 'Ocurrió un error al listar los profesores', detalle: e.message }.to_json
+  begin
+    # Consulta para obtener los datos de los profesores con JOIN entre las tablas
+    profesores = DB[:profesores]
+                 .join(:curso_profesor, profesor_id: :id)
+                 .join(:cursos, id: Sequel[:curso_profesor][:curso_id])
+                 .select(
+                   Sequel[:profesores][:id].as(:profesor_id),
+                   Sequel[:profesores][:nombre].as(:nombre),
+                   Sequel[:profesores][:correo].as(:correo),
+                   Sequel[:profesores][:biografia].as(:biografia),
+                   Sequel[:profesores][:foto].as(:foto),
+                   Sequel.lit('GROUP_CONCAT(cursos.nombre ) ').as(:cursos)
+                 )
+                 .group_by(Sequel[:profesores][:id])  # Agrupar por ID del profesor
+                 .all
+
+    if profesores.any?
+      # Devolver los datos en formato JSON
+      status 200
+      profesores.to_json
+    else
+      # Si no hay profesores
+      status 404
+      { message: 'No hay profesores registrados o asociados a cursos.' }.to_json
     end
-    # Respuesta
-    status status
-    resp
+  rescue StandardError => e
+    # Manejo de errores
+    status 500
+    { error: "Error en el servidor: #{e.message}" }.to_json
   end
+end
+
+
   #ENDPOINT PARA BUSCAR POR NOMBRE DEL PROFESOR
   get '/profesores/buscar' do
     nombre = params[:nombre]
