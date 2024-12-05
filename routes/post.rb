@@ -11,7 +11,9 @@ get '/posts/lista' do
               Sequel[:carreras][:nombre].as(:carrera),
               Sequel[:posts][:descripcion].as(:descripcion_post),
               Sequel[:materiales][:enlace].as(:enlace_material),
-              Sequel[:posts][:fecha_subida_post].as(:fecha_subida)
+              Sequel[:posts][:fecha_subida_post].as(:fecha_subida),
+              Sequel[:posts][:id].as(:post_id),
+            
             )
             .order(Sequel.desc(:fecha_subida_post))
             .all
