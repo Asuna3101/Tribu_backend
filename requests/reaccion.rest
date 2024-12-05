@@ -1,4 +1,4 @@
-@baseUrl = http://192.168.1.40:8080
+@baseUrl = http://192.168.18.19:8080
 
 ### Obtener todas las reacciones de un post específico
 GET {{baseUrl}}/post/1/likes

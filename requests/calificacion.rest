@@ -11,7 +11,7 @@ POST {{baseUrl}}/profesor/1/calificacion
 Content-Type: application/json
 
 {
-  "usuario_id": 1,
-  "estrella": 3,
-  "resenia": "Buen profesor"
+  "usuario_id": 11,
+  "estrella": 5,
+  "resenia": "La verdad que me encanto el curso"
 }
