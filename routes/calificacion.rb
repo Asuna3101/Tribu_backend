@@ -1,26 +1,40 @@
-get '/profesor/:id/calificaciones' do
-    profesor_id = params[:id].to_i
-  
-    begin
-      # Obtener todas las calificaciones del profesor con el nombre del usuario
-      calificaciones = DB[:calificaciones]
-                         .join(:usuarios, id: :usuario_id)
-                         .where(profesor_id: profesor_id)
-                         .select(:resenia, :estrella, :fecha_subida, Sequel[:usuarios][:nombre].as(:usuario_nombre))
-                         .all
-  
-      if calificaciones.any?
-        status 200
-        { calificaciones: calificaciones }.to_json
-      else
-        status 404
-        { error: 'No se encontraron calificaciones para este profesor' }.to_json
-      end
-    rescue StandardError => e
-      status 500
-      { error: "Error en el servidor: #{e.message}" }.to_json
+get '/profesores/:id/calificaciones' do
+  profesor_id = params[:id].to_i
+
+  begin
+    # Consulta para obtener las calificaciones con los datos adicionales del usuario
+    calificaciones = DB[:calificaciones]
+                      .join(:usuarios, id: :usuario_id) # Unión con la tabla de usuarios
+                      .join(:carreras, id: Sequel[:usuarios][:carrera_id]) # Unión con la tabla de carreras
+                      .where(profesor_id: profesor_id) # Filtra por el ID del profesor
+                      .select(
+                        :resenia,
+                        :estrella,
+                        :fecha_subida,
+                        Sequel[:usuarios][:nombre].as(:usuario_nombre), # Nombre del usuario
+                        Sequel[:usuarios][:foto].as(:usuario_foto), # Foto del usuario
+                        Sequel[:carreras][:nombre].as(:carrera_usuario) # Carrera del usuario
+                      )
+                      .order(Sequel.desc(:fecha_subida)) # Ordenar por la fecha más reciente
+                      .all
+
+    if calificaciones.any?
+      # Respuesta con calificaciones en formato JSON
+      status 200
+      { calificaciones: calificaciones }.to_json
+    else
+      # Si no hay calificaciones para este profesor
+      status 404
+      { error: 'No se encontraron calificaciones para este profesor' }.to_json
     end
+  rescue StandardError => e
+    # Manejo de errores en el servidor
+    status 500
+    { error: "Error en el servidor: #{e.message}" }.to_json
   end
+end
+
+
 ##########################
 get '/profesor/:id/promedio-calificaciones' do
     profesor_id = params[:id].to_i
