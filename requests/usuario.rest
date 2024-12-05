@@ -12,10 +12,7 @@ Content-Type: application/json
 
 ###
 
-### Obtener Usuario Autenticado
-GET {{baseUrl}}/usuario
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiY29kaWdvIjoiMjAyMTAyNzQifQ.0kkGgzXiUE8Ys5kM8jdfdU2QCzIxuzO0TzFGtbXRMuw
-###
+
 
 ### Crear Usuario
 POST {{baseUrl}}/usuarios

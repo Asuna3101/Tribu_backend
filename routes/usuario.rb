@@ -32,26 +32,6 @@ post '/login' do
   end
 end
 
-# Endpoint para obtener información del usuario sin autenticación (usando código)
-get '/usuario/:codigo' do
-  codigo = params['codigo']
-
-  begin
-    # Encuentra al usuario usando el código
-    user = Usuario.find(codigo: codigo)
-
-    if user
-      status 200
-      return user.to_json
-    else
-      status 404
-      { error: 'Usuario no encontrado' }.to_json
-    end
-  rescue StandardError => e
-    status 500
-    { error: "Error en el servidor: #{e.message}" }.to_json
-  end
-end
 
 # Endpoint para buscar un usuario por correo
 get '/usuario/correo/:correo' do
