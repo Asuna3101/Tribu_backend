@@ -24,7 +24,8 @@ CREATE TABLE profesores (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   nombre VARCHAR(200),
   correo VARCHAR(150),
-  biografia VARCHAR(500)
+  biografia VARCHAR(500),
+  foto VARCHAR(200)
 );
 
 CREATE TABLE cursos (

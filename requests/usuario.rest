@@ -1,4 +1,4 @@
-@baseUrl = http://192.168.232.1:8080
+@baseUrl = http://192.168.18.19:8080
 
 ### Login
 POST {{baseUrl}}/login
@@ -23,10 +23,10 @@ Content-Type: application/json
 
 {
   "nombre": "Mariela Alca",
-  "codigo": "20192005",
+  "codigo": "2000000",
   "correo": "mariela@test.com",
   "celular": "902305536",
-  "foto": "ruta/a/foto.jpg",
+  "foto": "",
   "contrasenia": "123",
   "carrera_id": 10
 }

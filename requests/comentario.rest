@@ -1,4 +1,4 @@
-@baseUrl = http://192.168.232.1:8080
+@baseUrl = http://192.168.18.19:8080
 
 ### Obtener la cantidad de comentarios en un post
 GET {{baseUrl}}/post/1/comments/count
