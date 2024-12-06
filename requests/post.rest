@@ -3,3 +3,15 @@
 GET {{baseUrl}}/posts/lista
 ### Lista de los posts de un usuario
 GET {{baseUrl}}/posts/usuario/1
+
+
+###Mandar un nuevo post
+POST{{baseUrl}}/posts/crear
+Content-Type: application/json
+
+{
+  "descripcion": "te falla no?",
+  "usuario_id": 2,
+  "archivo": "https://i.pinimg.com/736x/1a/46/0e/1a460eeddf1a1d3fe34bd33e7ae40f04.jpg",
+  
+}
