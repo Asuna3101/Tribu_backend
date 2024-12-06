@@ -1,4 +1,4 @@
-@baseUrl = http://192.168.18.19:8080
+@baseUrl = http://192.168.1.40:8080
 
 ### Listar Todas las Calificaciones de un Profesor
 GET {{baseUrl}}/profesores/1/calificaciones
