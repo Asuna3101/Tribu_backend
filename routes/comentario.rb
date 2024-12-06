@@ -99,4 +99,36 @@ delete '/post/:post_id/comment/:comment_id' do
       { error: "Error en el servidor: #{e.message}" }.to_json
     end
   end
+  #################################
+  get '/posts/comentarios/:post_id' do
+    post_id = params[:post_id].to_i # Obtiene el ID del post desde los parámetros
+  
+    begin
+      # Query para obtener los comentarios y los usuarios asociados al post
+      comentarios = DB[:comentarios]
+        .join(:usuarios, id: :usuario_id)
+        .join(:posts, id: Sequel[:comentarios][:post_id])
+        .where(Sequel[:comentarios][:post_id] => post_id) # Filtrar por post_id
+        .select(
+          Sequel[:comentarios][:id].as(:comentario_id),
+          Sequel[:comentarios][:texto].as(:comentario_texto),
+          Sequel[:usuarios][:nombre].as(:usuario_nombre)
+        )
+        .all
+  
+      if comentarios.any?
+        # Si hay comentarios, retornarlos en formato JSON
+        status 200
+        comentarios.to_json
+      else
+        # Si no hay comentarios para ese post, devolver un mensaje 404
+        status 404
+        { message: "No comments found for the post with ID #{post_id}." }.to_json
+      end
+    rescue StandardError => e
+      # Manejar errores y devolver un mensaje de error 500
+      status 500
+      { error: "Server error: #{e.message}" }.to_json
+    end
+  end
   
