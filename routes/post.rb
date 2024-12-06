@@ -72,56 +72,47 @@ get '/posts/usuario/:id' do
   end
 end
 ######################################################
-post '/posts/crear' do
+# Endpoint para agregar un nuevo post
+post '/posts-agregar' do
+  # Leer los datos del cuerpo de la solicitud
+  data = JSON.parse(request.body.read) rescue {}
+  
+  # Extraer los parámetros necesarios
+  descripcion = data['descripcion']
+  enlace = data['enlace']
+
   begin
-    # Obtener parámetros de la solicitud
-    descripcion = params[:descripcion]
-    archivo = params[:archivo] # Archivo subido
+    # Iniciar una transacción para asegurar la integridad de los datos
+    DB.transaction do
+      # Crear un nuevo post
+      post = DB[:posts].insert(
+        descripcion: descripcion,
+        fecha_subida_post: Date.today,
+        usuario_id: data['usuario_id']
+      )
 
-    # Validar que los parámetros sean correctos
-    if descripcion.nil? || archivo.nil?
-      status 400
-      return { error: 'La descripción y el archivo son obligatorios.' }.to_json
+      # Si se proporciona un enlace, crear un material asociado al post
+      if enlace
+        DB[:materiales].insert(
+          nombre: data['nombre_material'] || 'Material sin nombre',
+          tipo: data['tipo_material'] || 'Otro',
+          fecha_subida: Date.today,
+          enlace: enlace,
+          post_id: post
+        )
+      end
+
+      # Devolver respuesta exitosa
+      status 201
+      {
+        message: 'Post agregado con éxito', 
+        post_id: post
+      }.to_json
     end
-
-    # Guardar el archivo en una carpeta local (por ejemplo, 'uploads')
-    nombre_archivo = archivo[:filename] # Nombre original del archivo
-    ruta_archivo = "./uploads/#{nombre_archivo}" # Ruta de almacenamiento local
-
-    # Crear carpeta 'uploads' si no existe
-    Dir.mkdir('./uploads') unless Dir.exist?('./uploads')
-
-    # Escribir el archivo en el sistema de archivos
-    File.open(ruta_archivo, 'wb') do |f|
-      f.write(archivo[:tempfile].read)
-    end
-
-    # Obtener el tipo de archivo (extensión)
-    tipo_archivo = File.extname(nombre_archivo).delete('.')
-
-    # Insertar el post en la tabla `posts`
-    post_id = DB[:posts].insert(
-      descripcion: descripcion,
-      fecha_subida_post: Sequel::CURRENT_TIMESTAMP, # Fecha automática
-      usuario_id: 1 # Cambia esto por el usuario autenticado (puede venir de la sesión)
-    )
-
-    # Insertar el material asociado en la tabla `materiales`
-    DB[:materiales].insert(
-      nombre: File.basename(nombre_archivo, ".*"), # Nombre del archivo sin la extensión
-      tipo: tipo_archivo,
-      fecha_subida: Sequel::CURRENT_TIMESTAMP, # Fecha automática
-      enlace: ruta_archivo, # Ruta local del archivo
-      post_id: post_id # Relación con el post
-    )
-
-    # Respuesta exitosa
-    status 201
-    { message: 'Post creado exitosamente.', post_id: post_id }.to_json
-
   rescue StandardError => e
-    # Manejo de errores
+    # Manejar cualquier error durante la creación
     status 500
     { error: "Error en el servidor: #{e.message}" }.to_json
   end
 end
+
